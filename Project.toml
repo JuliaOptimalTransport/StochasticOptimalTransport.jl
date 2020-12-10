@@ -1,0 +1,7 @@
+name = "StochasticOptimalTransport"
+uuid = "d0107fbf-5e6e-4997-ac8d-099d2392f4a6"
+authors = ["David Widmann <david.widmann@it.uu.se>"]
+version = "0.1.0"
+
+[compat]
+julia = "1.3"
