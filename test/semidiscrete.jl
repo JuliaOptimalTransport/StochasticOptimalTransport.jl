@@ -29,8 +29,8 @@
         ν = rand(3)
         ν ./= sum(ν)
         μ = DiscreteNonParametric(ys, ν)
-        @test SOT.wasserstein_SGA(c, μ, ν, ys) ≈ 0 atol=1e-2
-        @test SOT.wasserstein_SGA(c, μ, ν, ys, 1e-6) ≈ 0 atol=1e-2
-        @test SOT.wasserstein_SGA(c, μ, ν, ys, 1e-3) ≈ 0 atol=1e-2
+        @test SOT.wasserstein_SGA(c, μ, ν, ys) ≈ 0 atol=2e-2
+        @test SOT.wasserstein_SGA(c, μ, ν, ys, 1e-6) ≈ 0 atol=2e-2
+        @test SOT.wasserstein_SGA(c, μ, ν, ys, 1e-3) ≈ 0 atol=2e-2
     end
 end
