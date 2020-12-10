@@ -1,6 +1,10 @@
 using StochasticOptimalTransport
+
+using Distributions
 using Test
 
+const SOT = StochasticOptimalTransport
+
 @testset "StochasticOptimalTransport.jl" begin
-    # Write your tests here.
+    @testset "Semi-discrete OT" begin include("semidiscrete.jl") end
 end
