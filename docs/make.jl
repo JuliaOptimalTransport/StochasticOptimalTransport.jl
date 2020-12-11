@@ -18,4 +18,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/devmotion/StochasticOptimalTransport.jl",
+    push_preview = true,
 )

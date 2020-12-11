@@ -1,12 +1,12 @@
-"""
+@doc raw"""
     ctransform(c, v, x, ys, ν, ε)
 
 Compute the c-transform
 ```math
-v^{c,ε}(x) = \\begin{cases}
-\\- ε \\log\\bigg(\\sum_{i=1}^n \\exp{\\Big(\\frac{v[i] - c(x, ys[i])}{ε}\\Big)} ν[i]\\bigg) & \\text{if } ε > 0,\\\\
-\\min_{i} c(x, y[i]) - v[i] & \\text{otherwise}.
-\\end{cases}
+v^{c,ε}(x) = \begin{cases}
+- ε \log\bigg(\sum_{i=1}^n \exp{\Big(\frac{v[i] - c(x, ys[i])}{ε}\Big)} ν[i]\bigg) & \text{if } ε > 0,\\
+\min_{i} c(x, y[i]) - v[i] & \text{otherwise}.
+\end{cases}
 ```
 """
 function ctransform(
