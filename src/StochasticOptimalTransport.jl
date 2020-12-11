@@ -10,7 +10,7 @@ include("utils.jl")
 include("semidiscrete.jl")
 
 @doc raw"""
-    wasserstein([rng, ], c, μ, ν[, ε; kwargs...])
+    wasserstein([rng, ]c, μ, ν[, ε; kwargs...])
 
 Estimate the (entropic regularization of the) Wasserstein distance
 ```math
