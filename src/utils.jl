@@ -9,6 +9,11 @@ struct DiscreteMeasure{X<:AbstractVector,P<:AbstractVector}
     end
 end
 
+"""
+    DiscreteMeasure(xs::AbstractVector, ps::AbstractVector)
+
+Construct a discrete measure with support `xs` and corresponding weights `ps`.
+"""
 function DiscreteMeasure(xs::AbstractVector, ps::AbstractVector)
     return DiscreteMeasure{typeof(xs),typeof(ps)}(xs, ps)
 end
