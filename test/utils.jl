@@ -1,4 +1,8 @@
 @testset "utils.jl" begin
+    @testset "DiscreteMeasure" begin
+        @test_throws ErrorException SOT.DiscreteMeasure(randn(3), rand(2))
+    end
+
     @testset "gradient step" begin
         c(x, y) = abs(x - y)
         τ = rand()
