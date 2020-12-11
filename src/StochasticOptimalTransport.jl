@@ -7,6 +7,7 @@ import Random
 import Statistics
 
 include("utils.jl")
+include("discrete.jl")
 include("semidiscrete.jl")
 
 @doc raw"""
@@ -19,14 +20,23 @@ W_{ε}(μ, ν) = \min_{π ∈ Π(μ,ν)} \int c(x, y) \,π(\mathrm{d}(x,y)) +
 ```
 with respect to cost function `c` using stochastic optimization.
 
-If measure `μ` is an arbitrary measure for which samples can be obtained with
-`rand(rng, μ)` and `ν` is a [`DiscreteMeasure`](@ref), then the Wasserstein
-distance is approximated with stochastic gradient descent with averaging (SGA).
+If both measures `μ` and `ν` are [`DiscreteMeasure`](@ref)s, then the
+Wasserstein distance is approximated with stochastic averaged gradient
+descent (SAG). The convergence rate of SAG is ``O(1 / k)``, where
+``k`` is the number of iterations, and hence converges faster than stochastic
+gradient descent (SGD) at the price of increased memory consumption.
+
+If only one of the measures `μ` and `ν` is a [`DiscreteMeasure`](@ref), then the
+Wasserstein distance is approximated with stochastic gradient descent with
+averaging (SGA). In this case, it is required that samples of the non-discrete measure `λ`
+can be obtained with `rand(rng, λ)`. The convergence rate of SGA is ``O(1/√k)``,
+where ``k`` is the number of iterations.
 
 If `ε` is `nothing` (the default), then the unregularized Wasserstein distance is
 approximated. Otherwise, the entropic regularization with `ε > 0` is estimated.
 
-The SGA algorithm uses the step size schedule
+The SAG algorithm uses a constant step size, whereas the SGA algorithm uses the step size
+schedule
 ```math
     τᵢ = \frac{τ₁}{1 + \sqrt{(i - 1) / w}}
 ```
@@ -35,13 +45,12 @@ indicates the number of iterations serving as a warm-up phase.
 
 # Keyword arguments
 - `maxiters::Int = 10_000`: maximum number of gradient steps
-- `initial_stepsize = 1`: initial step size ``τ₁``
-- `warmup_phase = 1`: warm-up phase ``w``
-- `atol = 0`: absolute tolerance of the SGA algorithm
-- `rtol = iszero(atol) ? typeof(float(atol))(1 // 10_000) : 0`: relative tolerance of the
-  SGA algorithm
+- `stepsize = 1`: constant stepsize of SAG or initial step size ``τ₁`` of SGA
+- `warmup_phase = 1`: warm-up phase ``w`` of SGA
+- `atol = 0`: absolute tolerance
+- `rtol = iszero(atol) ? typeof(float(atol))(1 // 10_000) : 0`: relative tolerance
 - `montecarlo_samples = 10_000`: Number of Monte Carlo samples from `μ` for approximating
-  an expectation with respect to `μ`
+  an expectation with respect to `μ` in the semi-discrete optimal transport problem
 
 # References
 
