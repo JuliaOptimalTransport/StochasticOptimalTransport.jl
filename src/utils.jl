@@ -114,3 +114,31 @@ function ctransform(
     return - ε * (t + 1)
 end
 
+"""
+    ctransform(v, C)
+
+Compute the vector of c-transforms
+```math
+    v^{c}(x) = \\min_{y ∈ Y} c(x, y) - v(x)
+```
+for all ``x ∈ X``, where `v[i] = v(xᵢ)` and `C[i, j] = c(xᵢ, yⱼ)`.
+"""
+ctransform(v::AbstractVector, C::AbstractMatrix) = vec(minimum(C .- v'; dims=2))
+
+"""
+    ctransform(v, C, ν, ε)
+
+Compute the vector of smoothed c-transforms
+```math
+    v^{c,ε}(x) = - ε \\log\\bigg(\\int_{Y} \\exp{\\Big(\\frac{v(x) - c(x, y)}{ε}\\Big)} \\,ν(\\mathrm{d}y)\\bigg)
+```
+for all ``x ∈ X``, where `v[i] = v(xᵢ)`, `C[i, j] = c(xᵢ, yⱼ)`, and `ν(\\mathrm{d}yᵢ) = ν[i] λ(\\mathrm{d}yᵢ)`
+for counting measure `λ`.
+"""
+function ctransform(v::AbstractVector, C::AbstractMatrix, ν::AbstractVector, ε::Real)
+    R = @. (v' - C) / ε + log(ν')
+    c = vec(StatsFuns.logsumexp(R; dims=2))
+    c .*= -ε
+    return c
+end
+
