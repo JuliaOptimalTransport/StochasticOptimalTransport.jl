@@ -1,10 +1,10 @@
 module StochasticOptimalTransport
 
-import StatsFuns
+using LogExpFunctions: LogExpFunctions
 
-import LinearAlgebra
-import Random
-import Statistics
+using LinearAlgebra: LinearAlgebra
+using Random: Random
+using Statistics: Statistics
 
 include("utils.jl")
 include("discrete.jl")
@@ -60,12 +60,7 @@ Peyré, Gabriel, & Marco Cuturi (2019). Computational Optimal Transport. Foundat
 """
 wasserstein(args...; kwargs...) = wasserstein(Random.GLOBAL_RNG, args...; kwargs...)
 function wasserstein(
-    rng::Random.AbstractRNG,
-    c,
-    μ,
-    ν,
-    ε::Union{Real,Nothing} = nothing;
-    kwargs...,
+    rng::Random.AbstractRNG, c, μ, ν, ε::Union{Real,Nothing}=nothing; kwargs...
 )
     # approximate solution `v` of the dual problem
     v = dual_v(rng, c, μ, ν, ε; kwargs...)

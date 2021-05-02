@@ -1,11 +1,5 @@
 function dual_cost(
-    rng::Random.AbstractRNG,
-    c,
-    v,
-    μ::DiscreteMeasure,
-    ν::DiscreteMeasure,
-    ε;
-    kwargs...,
+    rng::Random.AbstractRNG, c, v, μ::DiscreteMeasure, ν::DiscreteMeasure, ε; kwargs...
 )
     # compute mean c-transform
     mean_ctransform = sum(p * ctransform(c, v, x, ν, ε) for (x, p) in zip(μ.xs, μ.ps))
@@ -19,10 +13,10 @@ function dual_v(
     μ::DiscreteMeasure,
     ν::DiscreteMeasure,
     ε;
-    stepsize = 1,
-    maxiters::Int = 10_000,
-    atol = 0,
-    rtol = iszero(atol) ? typeof(float(atol))(1 // 10_000) : 0,
+    stepsize=1,
+    maxiters::Int=10_000,
+    atol=0,
+    rtol=iszero(atol) ? typeof(float(atol))(1//10_000) : 0,
 )
     # initial iterates
     k = 1
