@@ -1,6 +1,6 @@
 module StochasticOptimalTransport
 
-import StatsFuns
+import LogExpFunctions
 
 import LinearAlgebra
 import Random

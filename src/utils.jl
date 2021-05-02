@@ -32,7 +32,7 @@ end
 # initial gradient step (regularized gradient)
 function gradient_step(c, τ, ν::DiscreteMeasure, x, ε::Real)
     tmp = @. - c((x,), ν.xs) / ε
-    StatsFuns.softmax!(tmp)
+    LogExpFunctions.softmax!(tmp)
     z = @. τ * (ν.ps - tmp)
     return z
 end
@@ -72,7 +72,7 @@ function gradient_step!(
     reset::Bool = false,
 )
     @. tmp = (v - c((x,), ν.xs)) / ε
-    StatsFuns.softmax!(tmp)
+    LogExpFunctions.softmax!(tmp)
     if reset
         @. z = τ * (ν.ps - tmp)
     else
@@ -108,7 +108,7 @@ function ctransform(
     ν::DiscreteMeasure,
     ε::Real,
 )
-    t = StatsFuns.logsumexp(
+    t = LogExpFunctions.logsumexp(
         (vᵢ - c(x, yᵢ)) / ε + log(νᵢ) for (vᵢ, yᵢ, νᵢ) in zip(v, ν.xs, ν.ps)
     )
     return - ε * (t + 1)
