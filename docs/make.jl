@@ -1,5 +1,18 @@
-using StochasticOptimalTransport
 using Documenter
+
+# Print `@debug` statements (https://github.com/JuliaDocs/Documenter.jl/issues/955)
+if haskey(ENV, "GITHUB_ACTIONS")
+    ENV["JULIA_DEBUG"] = "Documenter"
+end
+
+using StochasticOptimalTransport
+
+DocMeta.setdocmeta!(
+    StochasticOptimalTransport,
+    :DocTestSetup,
+    :(using StochasticOptimalTransport);
+    recursive=true,
+)
 
 makedocs(;
     modules=[StochasticOptimalTransport],
@@ -11,12 +24,13 @@ makedocs(;
         canonical="https://devmotion.github.io/StochasticOptimalTransport.jl",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
+    strict=true,
+    checkdocs=:exports,
 )
 
 deploydocs(;
     repo="github.com/devmotion/StochasticOptimalTransport.jl",
-    push_preview = true,
+    push_preview=true,
+    devbranch="main",
 )
